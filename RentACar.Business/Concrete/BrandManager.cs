@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
+using RentACar.Business.ValidationRules.FluentValidation;
+using RentACar.Core.Aspects.Autofac.Validation;
 using RentACar.Core.Utilities.Business;
 using RentACar.Core.Utilities.Results;
 using RentACar.DataAccess.Abstract;
@@ -24,6 +26,7 @@ namespace RentACar.Business.Concrete
             _brandDal = brandDal;
         }
 
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
             var brandNormalizedName = brand.Name.ToUpper();
@@ -51,6 +54,7 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
+
         public IDataResult<List<Brand>> GetAll()
         {
             var result = BusinessRules.Run(CheckIfBrandCountEqualsZero());
@@ -66,14 +70,15 @@ namespace RentACar.Business.Concrete
 
         public IDataResult<Brand> GetByBrandId(int brandId)
         {
-            var result = _brandDal.Get(b => b.Id == b.Id);
+            var result = BusinessRules.Run(CheckIfBrandIdExist(brandId));
 
-            if (result == null)
-                return new ErrorDataResult<Brand>(Messages.NotFound);
+            if (!result.IsSuccees)
+                return result;
 
-            return new SuccessDataResult<Brand>(result);
+            return result;
         }
 
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult Update(Brand brand)
         {
             var brandNormalizedName = brand.Name.ToUpper();
@@ -95,14 +100,22 @@ namespace RentACar.Business.Concrete
         private IDataResult<List<Brand>> CheckIfBrandCountEqualsZero()
         {
             var result = _brandDal.GetAll();
-      
+
             if (result.Count == 0)
                 return new ErrorDataResult<List<Brand>>(Messages.CountEqualsZero);
 
             return new SuccessDataResult<List<Brand>>(result);
         }
 
-       
+        private IDataResult<Brand> CheckIfBrandIdExist(int brandId)
+        {
+            var result = _brandDal.Get(b => b.Id == brandId);
+
+            if (result == null)
+                return new ErrorDataResult<Brand>(Messages.NotFound);
+
+            return new SuccessDataResult<Brand>(result);
+        }
 
         private IResult CheckBrandNameExist(string brandNormalizedName)
         {

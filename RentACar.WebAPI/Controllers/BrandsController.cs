@@ -32,6 +32,17 @@ namespace RentACar.WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("getbyid/{brandId}")]
+        public IActionResult GetById(int brandId)
+        {
+            var result = _brandService.GetByBrandId(brandId);
+
+            if (!result.IsSuccees)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public IActionResult Add(Brand brand)
         {

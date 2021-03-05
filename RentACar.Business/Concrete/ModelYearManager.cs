@@ -1,5 +1,7 @@
 ﻿using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
+using RentACar.Business.ValidationRules.FluentValidation;
+using RentACar.Core.Aspects.Autofac.Validation;
 using RentACar.Core.Utilities.Business;
 using RentACar.Core.Utilities.Results;
 using RentACar.DataAccess.Abstract;
@@ -20,6 +22,8 @@ namespace RentACar.Business.Concrete
         {
             _modelYearDal = modelYearDal;
         }
+
+        [ValidationAspect(typeof(ModelYearValidator))]
 
         public IResult Add(ModelYear modelYear)
         {

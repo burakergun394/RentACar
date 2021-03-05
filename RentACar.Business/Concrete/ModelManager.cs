@@ -1,5 +1,7 @@
-﻿using RentACar.Business.Abstract;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
+using RentACar.Core.Aspects.Autofac.Validation;
 using RentACar.Core.Utilities.Business;
 using RentACar.Core.Utilities.Results;
 using RentACar.DataAccess.Abstract;
@@ -21,6 +23,7 @@ namespace RentACar.Business.Concrete
             _modelDal = modelDal;
         }
 
+        [ValidationAspect(typeof(ModelValidator))]
         public IResult Add(Model model)
         {
             var normalizedName = model.Name.ToUpper();
@@ -60,6 +63,8 @@ namespace RentACar.Business.Concrete
 
             return result;
         }
+
+        [ValidationAspect(typeof(ModelValidator))]
 
         public IResult Update(Model model)
         {

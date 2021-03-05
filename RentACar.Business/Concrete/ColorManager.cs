@@ -1,5 +1,7 @@
 ﻿using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
+using RentACar.Business.ValidationRules.FluentValidation;
+using RentACar.Core.Aspects.Autofac.Validation;
 using RentACar.Core.Utilities.Business;
 using RentACar.Core.Utilities.Results;
 using RentACar.DataAccess.Abstract;
@@ -21,6 +23,7 @@ namespace RentACar.Business.Concrete
             _colorDal = colorDal;
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
             var normalizedName = color.Name.ToUpper();
@@ -60,6 +63,8 @@ namespace RentACar.Business.Concrete
 
             return result;
         }
+
+        [ValidationAspect(typeof(ColorValidator))]
 
         public IResult Update(Color color)
         {
