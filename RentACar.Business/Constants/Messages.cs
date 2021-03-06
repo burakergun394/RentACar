@@ -17,5 +17,6 @@ namespace RentACar.Business.Constants
         public static string CountEqualsZero = "Eklenen veri/veriler bulunamadı. Lütfen eklemek için tıklayınız.";
 
         public static string YearAlreadyRegistered = "Girdiğiniz yıl önceden eklenilmiştir.";
+        public static string CarNotReturn = "Kiralamak istediğiniz araö şuan kiradadaır.";
     }
 }

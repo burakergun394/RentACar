@@ -82,7 +82,15 @@ namespace RentACar.Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarsDetails()
         {
-            throw new NotImplementedException();
+            var result = BusinessRules.Run(CheckIfCarDetailCountEqualsZero());
+
+            if (result == null)
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.CountEqualsZero);
+
+            if (!result.IsSuccees)
+                return result;
+
+            return result;
         }
 
         public IResult Update(Car car)
@@ -99,7 +107,6 @@ namespace RentACar.Business.Concrete
 
             return new SuccessResult();
         }
-
         private IDataResult<List<Car>> CheckIfCarCountEqualsZero()
         {
             var result = _carDal.GetAll();
@@ -109,7 +116,15 @@ namespace RentACar.Business.Concrete
 
             return new SuccessDataResult<List<Car>>(result);
         }
+        private IDataResult<List<CarDetailDto>> CheckIfCarDetailCountEqualsZero()
+        {
+            var result = _carDal.GetCarDetails();
 
+            if (result.Count == 0)
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.CountEqualsZero);
+
+            return new SuccessDataResult<List<CarDetailDto>>(result);
+        }
         private IDataResult<List<Car>> CheckIfCarCountByBrandEqualsZero(int brandId)
         {
             var result = _carDal.GetAll(c => c.BrandId == brandId);

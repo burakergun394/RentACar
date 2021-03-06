@@ -20,6 +20,9 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Model> Models { get; set; }
         public DbSet<ModelYear> ModelYears { get; set; }
         public DbSet<Color> Colors { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
 
     }
 }
