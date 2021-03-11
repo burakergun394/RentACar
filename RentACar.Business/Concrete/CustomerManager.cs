@@ -40,10 +40,10 @@ namespace RentACar.Business.Concrete
 
         private IResult CheckUserIdExist(int userId)
         {
-            var result = _userService.GetById(userId);
+            //var result = _userService.GetById(userId);
 
-            if (result == null)
-                return new ErrorResult(result.Message);
+            //if (result == null)
+            //    return new ErrorResult(result.Message);
 
             return new SuccessResult();
         }

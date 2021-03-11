@@ -1,10 +1,11 @@
-﻿using RentACar.Core.Entities.Abstract;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.Core.Entities.Abstract;
 
-namespace RentACar.Entities.Concrete
+namespace RentACar.Core.Entities.Concrete
 {
     public class User : IEntity
     {
@@ -12,7 +13,9 @@ namespace RentACar.Entities.Concrete
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
         public string NormalizedEmail { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
+        public bool Status { get; set; }
     }
 }

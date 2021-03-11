@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.Core.Entities.Concrete;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework.Contexts
 {
@@ -24,6 +25,8 @@ namespace RentACar.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<CarImage> CarImages { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
     }
 }

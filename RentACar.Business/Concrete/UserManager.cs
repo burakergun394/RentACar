@@ -11,12 +11,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.Core.Entities.Concrete;
+using RentACar.Entities.Dtos;
 
 namespace RentACar.Business.Concrete
 {
     public class UserManager : IUserService
     {
-        private IUserDal _userDal;
+        private readonly IUserDal _userDal;
 
         public UserManager(IUserDal userDal)
         {
@@ -38,9 +40,19 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
-        public IDataResult<User> GetById(int userId)
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
         {
-            var result = BusinessRules.Run(CheckIfUserIdExist(userId));
+            var result = _userDal.GetClaims(user);
+
+            if (result == null)
+                return new ErrorDataResult<List<OperationClaim>>(result);
+
+            return new SuccessDataResult<List<OperationClaim>>(result);
+        }
+
+        public IDataResult<User> GetByMail(string email)
+        {
+            var result = BusinessRules.Run(CheckIfUserEmailExist(email));
 
             if (!result.IsSuccees)
                 return result;
@@ -48,11 +60,11 @@ namespace RentACar.Business.Concrete
             return result;
         }
 
-        private IDataResult<User> CheckIfUserIdExist(int userId)
+        private IDataResult<User> CheckIfUserEmailExist(string email)
         {
-            var result = _userDal.Get(u => u.Id == userId);
+            var result = _userDal.Get(u => u.Email == email);
 
-            if (result == null)
+            if (result != null)
                 return new ErrorDataResult<User>(Messages.NotFound);
 
             return new SuccessDataResult<User>(result);

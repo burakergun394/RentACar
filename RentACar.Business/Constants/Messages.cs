@@ -21,5 +21,13 @@ namespace RentACar.Business.Constants
         public static string CarNotReturn = "Kiralamak istediğiniz araö şuan kiradadaır.";
 
         public static string CarLimited = "Arabaya resim yükleme limiti aşıldı. Resim eklemek için önceki resimleri düzenleyin veya silin.";
+
+        public static string UserRegistered = "Kayıt başarılı.";
+        public static string PasswordError = "Şifre hatalı.";
+        public static string LoginSuccessful = "Giriş başarılı.";
+        public static string UserAlreadyExist = "Kullanıcı mevcut.";
+        public static string CreateAccessToken = "Access Token oluşturuldu.";
+        public static string AuthorizationDenied = "Yetkiniz yok.";
+
     }
 }
