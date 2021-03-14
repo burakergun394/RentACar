@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RentACar.Business.BusinessAspects.Autofac;
+using RentACar.Core.Aspects.Autofac.Caching;
 
 namespace RentACar.Business.Concrete
 {
@@ -26,6 +28,7 @@ namespace RentACar.Business.Concrete
             _brandDal = brandDal;
         }
 
+        [SecuredOperation("brand.add,admin")]
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
@@ -55,6 +58,7 @@ namespace RentACar.Business.Concrete
         }
 
 
+        [CacheAspect()]
         public IDataResult<List<Brand>> GetAll()
         {
             var result = BusinessRules.Run(CheckIfBrandCountEqualsZero());

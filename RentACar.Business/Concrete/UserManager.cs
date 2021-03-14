@@ -52,12 +52,7 @@ namespace RentACar.Business.Concrete
 
         public IDataResult<User> GetByMail(string email)
         {
-            var result = BusinessRules.Run(CheckIfUserEmailExist(email));
-
-            if (!result.IsSuccees)
-                return result;
-
-            return result;
+            return new SuccessDataResult<User>(_userDal.Get(c => c.NormalizedEmail == email.ToUpper()));
         }
 
         private IDataResult<User> CheckIfUserEmailExist(string email)

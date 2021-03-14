@@ -50,6 +50,8 @@ namespace RentACar.WebAPI.Controllers
 
             var registerResult = _authService.Register(userForRegisterDto);
 
+            var user = registerResult.Data;
+
             var result = _authService.CreateAccessToken(registerResult.Data);
 
             if (!result.IsSuccees)

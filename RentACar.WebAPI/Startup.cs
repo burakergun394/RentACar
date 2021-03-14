@@ -14,6 +14,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using RentACar.Core.DependencyResolvers;
+using RentACar.Core.Extensions;
+using RentACar.Core.Utilities.IoC;
 using RentACar.Core.Utilities.Securities.Encryption;
 using RentACar.Core.Utilities.Securities.JWT;
 
@@ -47,6 +50,10 @@ namespace RentACar.WebAPI
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                 };
+            });
+            services.AddDependencyResolvers(new ICoreModule[]
+            {
+                new CoreModule()
             });
             services.AddSwaggerGen(c =>
             {

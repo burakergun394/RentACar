@@ -44,7 +44,7 @@ namespace RentACar.Business.Concrete
             if (!result.IsSuccees)
                 return new ErrorDataResult<User>(result.Message);
 
-            return new SuccessDataResult<User>(Messages.UserRegistered);
+            return new SuccessDataResult<User>(user,Messages.UserRegistered);
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
@@ -58,7 +58,7 @@ namespace RentACar.Business.Concrete
                 result.Data.PasswordSalt))
                 return new ErrorDataResult<User>(Messages.PasswordError);
 
-            return new ErrorDataResult<User>(result.Data, Messages.LoginSuccessful);
+            return new SuccessDataResult<User>(result.Data, Messages.LoginSuccessful);
         }
 
         public IResult UserExists(string email)
